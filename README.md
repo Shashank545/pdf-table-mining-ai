@@ -193,4 +193,5 @@ uvicorn app_prod:app_prod --reload
 
 ---
 
-# 🚀 Happy Extracting!
+# 🚀 Happy Building with AI!
+_"The future belongs to those who build with data, dream with AI, and deploy with passion."_
