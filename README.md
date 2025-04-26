@@ -14,6 +14,7 @@ It allows secure extraction of tables like attendees, topics covered, meeting de
 - Uses **Azure OpenAI's GPT model** for intelligent, highly accurate extraction.
 - Secured with **API Key Authentication**.
 - Error handling, logging, and file cleanup included.
+- Automatic temp file cleanup after extraction.
 
 ---
 
@@ -21,21 +22,45 @@ It allows secure extraction of tables like attendees, topics covered, meeting de
 
 ```bash
 .
-├── app.py              # Main FastAPI application code
-├── .env                # Environment variables (Azure keys, API keys)
-├── requirements.txt    # Python dependencies
-└── README.md           # Project documentation
+├── app/                # Core FastAPI app (defined in code)
+├── data_samples/       # Contains sample PDF files for testing
+│   ├── sample1.pdf
+│   ├── sample2.pdf
+│   └── ...
+├── .gitignore
+├── .gitkeep            # Empty placeholder if required
+├── README.md
+└── requirements.txt    # Python dependencies
 ```
 
 ---
+
+## 📂 Data Samples Storage
+
+You can store PDF sample files inside the `data_samples/` folder to test your API.
+
+Alternatively, if you prefer to use **Google Drive** securely for storing sample PDFs:
+- Create a private Google Drive folder.
+- Share it privately (only accessible to your account or service accounts).
+- Use libraries like `gdown`, `pydrive`, or Google Drive API to download the PDF files during runtime.
+- Example (using `gdown`):
+    ```bash
+    pip install gdown
+    gdown --id FILE_ID_FROM_GOOGLE_DRIVE
+    ```
+- **Tip:** Make sure to restrict access using permissions and access tokens when connecting programmatically.
+
+
+
+
 
 ## ⚙️ Setup and Installation
 
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
-cd your-repo-name
+git clone https://github.com/Shashank545/pdf-table-mining-ai
+cd pdf-table-mining-ai
 ```
 
 ### 2. Create a Python Virtual Environment (recommended)
@@ -76,6 +101,12 @@ X-API-Key: your-api-key
 ---
 
 ## 📚 API Endpoints
+
+| Endpoint                     | Description                               |
+|-------------------------------|-------------------------------------------|
+| POST `/extract-all-tables/`   | Extracts all predefined sections from MOM PDFs |
+| POST `/extract-topics-covered/` | Extracts only 'Topics Covered' section   |
+
 
 ### 1. Extract All Structured Tables
 
@@ -124,6 +155,32 @@ Run the app locally with:
 ```bash
 uvicorn app_prod:app_prod --reload
 ```
+
+
+**API will be available at**
+
+    - API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+
+## 🔐 Security
+
+- API key-based authentication (`X-API-Key` header required).
+- Files are stored temporarily and deleted automatically after processing.
+- No PDF files are saved permanently.
+
+
+
+## 📦 Dependencies
+
+- fastapi
+- uvicorn
+- python-dotenv
+- openai (Azure OpenAI)
+- PyPDF2
+- tempfile
+- logging
+- re
+- json
+
 
 ---
 
